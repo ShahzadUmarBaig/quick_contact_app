@@ -29,7 +29,24 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _launchURL(String phone) async {
-    var whatsAppUrl = "whatsapp://send?phone=$phone";
+    var phoneNumber =
+        phone.codeUnits.map((unit) => new String.fromCharCode(unit)).toList();
+    String whatsAppUrl;
+    String convertedPhone = "";
+    if (phoneNumber.first == "+") {
+      convertedPhone = phone;
+    } else {
+      phoneNumber.remove("0");
+      phoneNumber.insert(0, "2");
+      phoneNumber.insert(0, "9");
+      phoneNumber.insert(0, "+");
+      phoneNumber.forEach((element) {
+        convertedPhone = convertedPhone + element;
+      });
+    }
+
+    whatsAppUrl = "whatsapp://send?phone=$convertedPhone";
+
     if (await canLaunch(whatsAppUrl)) {
       await launch(whatsAppUrl);
     } else {
