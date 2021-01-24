@@ -1,7 +1,9 @@
 import 'package:call_log/call_log.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:whatsapp_chat/direct_dialogue.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -94,6 +96,19 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Colors.black54,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return ShowTextDialog();
+                },
+              );
+            },
+          )
+        ],
       ),
       body: FutureBuilder<List<CallLogEntry>>(
         future: getCallLogs(),
